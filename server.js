@@ -22,8 +22,22 @@ connectDB();
 const app = express();
 
 // ✅ CORS Configuration
+const allowedOrigins = [
+  process.env.VITE_API_URL,
+  "http://localhost:8085",
+  "http://localhost:5173",
+  "https://skiply.vercel.app"
+];
+
 const corsOptions = {
-  origin: "http://localhost:8085", // Frontend URL
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -47,7 +61,7 @@ app.post("/api/upload", upload.single("image"), (req, res) => {
   }
 
   const filePath = `/uploads/${req.file.filename}`;
-  const fileUrl = `http://localhost:5050${filePath}`;
+  const fileUrl = `${process.env.VITE_API_URL}${filePath}`;
 
   res.json({ url: fileUrl });
 });
