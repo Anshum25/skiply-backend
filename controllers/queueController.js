@@ -76,6 +76,20 @@ export const bookQueue = async (req, res) => {
     });
   }
 };
+  // Get all bookings for a specific business
+  export const getBusinessBookings = async (req, res) => {
+    try {
+      const businessId = req.params.businessId;
+      if (!businessId) {
+        return res.status(400).json({ message: 'Business ID is required' });
+      }
+      const bookings = await Booking.find({ business: businessId }).populate('user');
+      res.json(bookings);
+    } catch (error) {
+      console.error('Error fetching business bookings:', error);
+      res.status(500).json({ message: 'Failed to fetch business bookings', error: error.message });
+    }
+  };
 
 export const getUserBookings = async (req, res) => {
   try {
