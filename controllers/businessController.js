@@ -1,3 +1,25 @@
+// PATCH: Update opening hours for a business
+export const updateOpeningHours = async (req, res) => {
+  try {
+    const businessId = req.params.id;
+    const { openingHours } = req.body;
+    if (!openingHours) {
+      return res.status(400).json({ message: "Missing openingHours in request body" });
+    }
+    const updated = await Business.findByIdAndUpdate(
+      businessId,
+      { $set: { openingHours } },
+      { new: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ message: "Business not found" });
+    }
+    res.status(200).json({ message: "Opening hours updated", openingHours: updated.openingHours });
+  } catch (error) {
+    console.error("Update Opening Hours Error:", error.message);
+    res.status(500).json({ message: "Failed to update opening hours" });
+  }
+};
 import Business from "../models/Business.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";

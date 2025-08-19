@@ -7,13 +7,17 @@ import {
   getAllBusinesses,
   getOpenBusinesses,
   getAllBusinessDashboard,
-  getBusinessById, // ✅ ADD THIS
+  getBusinessById,
+  updateOpeningHours,
 } from "../controllers/businessController.js";
 import { getNearbyBusinesses } from "../controllers/businessController.js";
 
 const router = express.Router();
 import multer from "multer";
 const upload = multer();
+
+// PATCH route to update opening hours
+router.patch("/:id/opening-hours", updateOpeningHours);
 router.post("/register", upload.none(), registerBusiness);
 
 // 👤 Public routes
