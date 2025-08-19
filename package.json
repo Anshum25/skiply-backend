@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "install": "npm install --build-from-source",
     "postinstall": "npm rebuild canvas --build-from-source || true"
   },
   "dependencies": {
