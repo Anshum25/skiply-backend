@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import multer from "multer";
-import streamifier from "streamifier";
 import connectDB from "./config/db.js";
 import User from "./models/User.js";
 import bcrypt from "bcryptjs";
@@ -52,7 +51,7 @@ app.use(express.json());
 
 // ✅ File Upload Setup
 const __dirname = path.resolve(); // Needed when using ES Modules
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ dest: "uploads/" });
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
