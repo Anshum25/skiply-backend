@@ -36,6 +36,7 @@ export const protect = async (req, res, next) => {
 
 // Middleware to allow only business role
 export const businessOnly = (req, res, next) => {
+  console.log('User role in businessOnly middleware:', req.user.role);
   if (!req.user || req.user.role !== 'business') {
     return res.status(403).json({ message: 'Access denied: Business users only' });
   }

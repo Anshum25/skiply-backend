@@ -28,6 +28,11 @@ const bookingSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    tokenNumber: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
     customerName: {
       type: String,
       required: true,
